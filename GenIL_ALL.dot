@@ -1,0 +1,118 @@
+digraph ALL {
+  ratio = .707;
+  node [shape=cds, style=filled];
+
+  BTOrder;
+  BuilEmp;
+  BuilHeader;
+  BuilHierarchyHeader;
+  
+  node [style="rounded, dashed", shape=box, fillcolor=palegreen];
+  BTActivityH;
+  BTActivityI;
+  BTOpportI;
+  BTLeadH;
+  BTOpportH;
+  BTOrgSet;
+  BTPartnerAttr;
+  BTParCustAtt;
+  BTSalesSet;
+  BTServiceH;
+  BTTextIdKw;
+
+  BuilEmployeeActivity;
+  BuilPartnerFunction;
+  BuilNotes;
+  BuilEmpWorkplaceAddress;
+  BuilRoles;
+  BuilEmpStdWorkAddress;
+
+  BuilActivity;
+  BuilAddress;
+  BuilEmpWorkplaceAddress;
+  BuilIDNumber;
+  BuilLead;
+  BuilMarketing;
+  BuilNotes;
+  BuilOpportunity;
+  
+  node [shape=box, style=rounded];
+
+  BTOrder -> BTAdminH[label="BTOrderHeader 1"];
+    BTAdminH -> BTActivityH[label="BTHeaderActivityExt 0..1"];
+    BTAdminH -> BTItems[label="BTHeaderItemsExt 0..1"];
+      BTItems -> BTAdminI[label="BTOrderItemAll 1..n"];
+        BTAdminI -> BTActivityI[label="BTItemActivityExt 0..1"];
+        BTAdminI -> BTOpportI[label="BTItemOpportExt 0..1"];
+        BTAdminI -> BTOrgSet[label="BTItemOrgmanSet 0..1"];
+        BTAdminI -> BTPartnerSet[label="BTItemPartnerSet 0..1"];
+        BTAdminI -> BTSalesSet[label="BTItemSalesSet 0..1"];
+    BTAdminH -> BTLeadH[label="BTHeaderLeadExt 0..1"];
+    BTAdminH -> BTOpportH[label="BTHeaderOpportunityExt 0..1"];
+    BTAdminH -> BTOrgSet[label="BTHeaderOrgmanSet 0..1"];
+    BTAdminH -> BTPartnerSet[label="BTHeaderPartnerSet 0..1"];
+      BTPartnerSet -> BTPartner[label="BTPartnerAll 1..n"];
+        BTPartner -> BuilHeader[label="BTBusinessPartner 1"];
+        BTPartner -> BuilEmp[label="BTBusinessPartnerEmp 1"];
+        BTPartner -> BTPartnerAddr[label="BTPartnerAddress 1"];
+          BTPartnerAddr -> BTAddressEmail[label="BTAddressEmail 0..n"];
+        BTPartner -> BTPartnerAttr[label="BTPartnerAttributes 1"];
+        BTPartner -> BTParCustAtt[label="BTPartnerCustAttributes 0..n"];
+      BTPartnerSet -> BTPartner[label="BTPartner_<relnr> 0..n"];
+      BTPartnerSet -> BTPartner[label="BTPartner_<relnr>_MAIN 0..1"];
+    BTAdminH -> BTSalesSet[label="BTHeaderSalesSet 0..1"];
+    BTAdminH -> BTServiceH[label="BTHeaderServiceExt 0..1"];
+    BTAdminH -> BTTextIdH[label="BTHeaderTextIdSet 0..1"];
+      BTTextIdH -> BTTextId[label="BTTextIdHAll 1..n"];
+         BTTextId -> BTTextIdKw[label="BTTextIdKeywordActive 0..n"];
+
+  BuilEmp -> BuilEmployeeActivity[label="BuilEmployeeActivityRel 0..n"];
+  BuilEmp -> BuilRelationship[label="BuilAllRelationRel 0..n"];
+    BuilRelationship -> BuilHeader[label="BuilGetRelatedPartnerRel 1"];
+    BuilRelationship -> BuilPartnerFunction[label="BuilPartnerFunctionRel 0..n"];
+  BuilEmp -> BuilAddress[label="BuilEmpPrivateAddressRel 0..1"];
+  BuilEmp -> BuilEmployeeRelation[label="BuilEmpRelationRel 0..n"];
+    BuilEmployeeRelation -> BuilEmpWorkplaceAddress[label="BuilEmpWorkplaceAddrRel 0..n"];
+    BuilEmployeeRelation -> BuilHeader[label="BuilGetHeaderforEmpRel 1"];
+  BuilEmp -> BuilRoles[label="BuilEmpRolesRel 0..n"];
+  BuilEmp -> BuilEmpStandardAddress[label="BuilEmpStandardAddressRel 0..1"];
+  BuilEmp -> BuilEmpStdWorkAddress[label="BuilEmpStdWorkAddressRel 0..1"];
+  BuilEmp -> BuilHeader[label="BuilEmpToHeaderRel 1"];
+  BuilEmp -> BuilHeader[label="BuilEmplyerRel 1"];
+
+  BuilHeader -> BuilActivity[label="BuilActivityRel 0..n"];
+  BuilHeader -> BuilAddress[label="BuilAddressRel 0..n"];
+  BuilHeader -> BuilAssignmentToHierarchy[label="BuilAssignmentToHierarchyRel 0..n"];
+    BuilAssignmentToHierarchy -> BuilHierarchyNode[label="BuilAssignmentToNodeRel 1"];
+  BuilHeader -> BuilContactPerson[label="BuilContactPersonCurrentRel 0..n"];
+  BuilHeader -> BuilContactPerson[label="BuilContactPersonInvalidRel 0..n"];
+  BuilHeader -> BuilContactPerson[label="BuilContactPersonRel 0..n"];
+  BuilHeader -> BuilEmployeeResponsible[label="BuilEmplResponsRel 0..n"];
+    BuilEmployeeResponsible -> BuilEmp[label="BuilGetEmplForHeaderRel 1"];
+  BuilHeader -> BuilEmployeeRelation[label="BuilEmployeeRelationRel 0..n"];
+    BuilEmployeeRelation -> BuilEmpWorkplaceAddress[label="BuilEmpWorkplaceAddrRel 0..n"];
+    BuilEmployeeRelation -> BuilHeader[label="BuilGetHeaderforEmpRel 1"];
+  BuilHeader -> BuilRespPartnerEmployee[label="BuilHasRespPartnerEmplyoeeRel 0..n"];
+    BuilRespPartnerEmployee -> BuilHeader[label="BuilGetRespPartnerEmployeeRel 1"];
+  BuilHeader -> BuilThirdParty[label="BuilHasThirdPartyRel 0..n"];
+    BuilThirdParty -> BuilHeader[label="BuilGetRelatedThirdPartyRel 1"];
+  BuilHeader -> BuilIDNumber[label="BuilHeaderIDNumberRel 1..n"];
+  BuilHeader -> BuilIDNumber[label="BuilIdentificationRel 0..n"];
+  BuilHeader -> BuilLead[label="BuilLeadRel 0..n"];
+  BuilHeader -> BuilMarketing[label="BuilMarketingRel 0..1"];
+  BuilHeader -> BuilNotes[label="BuilNotesRel 0..n"];
+  BuilHeader -> BuilOpportunity[label="BuilOpportunityRel 0..n"];
+  BuilHeader -> BuilRelationship[label="BuilRelationshipRel 0..n"];
+    // BuilRelationship -> mehr siehe oben
+  BuilHeader -> BuilRoles[label="BuilRolesRel 0..n"];
+
+  BuilHierarchyHeader -> BuilHierarchyNode[label="BuilHeaderNodeRel 0..n"];
+    BuilHierarchyNode -> BuilHNodeBPAssignment[label="BuilHNodeBPAssignmentRel 0..n"];
+      BuilHNodeBPAssignment -> BuilHeader[label="BuilHierarchyBPRel 1"];
+    BuilHierarchyNode -> BuilHierarchyNodeParentRel[label="BuilHNodeParentRel 0..n"];
+      BuilHierarchyNodeParentRel -> BuilHierarchyNode[label="BuilHNodeParentRelTarget 0..1"];
+    BuilHierarchyNode -> BuilHierarchyNode[label="BuilHNodeRel 0..n"];
+
+  
+  
+}
